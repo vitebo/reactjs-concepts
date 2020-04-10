@@ -14,7 +14,13 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    // TODO
+    const response = await api.post('repositories', {
+      title: `New project ${Date.now()}`,
+      url: "https://github.com/vitebo/reactjs-concepts",
+      techs: ["github", "gostack", "react"],
+    });
+    const repository = response.data;
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
