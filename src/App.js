@@ -8,9 +8,7 @@ function App() {
   const [repositories, setRepositories] = useState([]);
 
   useEffect(() => {
-    api
-      .get("repositories")
-      .then(response  => setRepositories(response.data));
+    api.get("repositories").then(response => setRepositories(response.data));
   }, []);
 
   async function handleAddRepository() {
@@ -24,7 +22,9 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    await api.delete(`repositories/${id}`);
+    const updatedRepositories = repositories.filter(repo => repo.id !== id);
+    setRepositories(updatedRepositories);
   }
 
   return (
@@ -39,7 +39,6 @@ function App() {
           </li>
         ))}
       </ul>
-
       <button onClick={handleAddRepository}>Adicionar</button>
     </div>
   );
